@@ -1,0 +1,115 @@
+
+
+
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DataTables Template</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.2.2/css/buttons.bootstrap.min.css">
+    <style>
+        body {
+            margin: 2em;
+        }
+        .table-container {
+            overflow-x: auto;
+            width: 100%;
+        }
+        table.dataTable {
+            width: 100% !important;
+        }
+    </style>
+</head>
+<body>
+   
+    <%- include('partials/header') %>
+    
+    <div class="table-container">
+      <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>binNumber</th>
+                <th>skuCode</th>
+                <th>skuDesc</th>
+                <th>sut</th>
+                <th>palletId</th>
+                <th>palletQty</th>
+                <th>binCapacity</th>
+                <th>totalPallets</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <% pallets.forEach(function(pallet) { %>
+                <tr>
+                    <td><%= pallet.binNumber %></td>
+                    <td><%= pallet.skuCode %></td>
+                    <td><%= pallet.skuDesc %></td>
+                    <td><%= pallet.sut %></td>
+                    <td><%= pallet._id %></td>
+                    <td><%= pallet.palletQty %></td>
+                    <td><%= pallet.binCapacity %></td>
+                    <td><%= pallet.Totalpallets %></td>
+                    
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    </div>
+    <%- include('partials/footer') %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.2.2/js/buttons.bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
+    <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script>
+    <!-- <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        fetch('/transferOrders')
+            .then(response => response.json())
+            .then(data => {
+                var table = $('#example').DataTable({
+                    "dom": '<"dt-buttons"Bf><"clear">lirtp',
+                    "paging": true,
+                    "autoWidth": true,
+                    "scrollX": true, // Enable horizontal scrolling
+                    "buttons": [
+                        'colvis',
+                        'copyHtml5',
+                        'csvHtml5',
+                        'excelHtml5',
+                        'pdfHtml5',
+                        'print'
+                    ],
+                    "data": data,
+                    "columns": [
+                        { "data": "binNumber" },
+                        { "data": "skuCode" },
+                        { "data": "skuDesc" },
+                        { "data": "sut" },
+                        { "data": "palletId" },
+                        { "data": "palletQty" },
+                        { "data": "binCapacity" },
+                        { "data": "totalPallets" },
+                        {
+                            "data": null,
+                            "defaultContent": '<button class="btn btn-primary">Edit</button> <button class="btn btn-danger">Delete</button>'
+                        }
+                    ]
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+    
+    </script> -->
+</body>
+</html>  
+
+

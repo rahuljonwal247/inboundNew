@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forklift Operator Screen</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="container mt-5">
+        <h2>Forklift Operator Screen</h2>
+        <% if (order) { %>
+            <form id="forkliftForm" method="POST" action="/confirm-transfer-order">
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="transferOrder">Transfer order #</label>
+                        <input type="text" class="form-control" id="transferOrder" name="transferOrder" value="<%= order.transferOrder %>">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="sourceLocation">Source Location</label>
+                        <input type="text" class="form-control" id="sourceLocation" name="sourceLocation" value="<%= order.binNumber %>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="destinationLocation">Destination Location</label>
+                        <input type="text" class="form-control" id="destinationLocation" name="destinationLocation">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="skuCode">SKU Code</label>
+                        <input type="text" class="form-control" id="skuCode" name="skuCode" value="<%= order.skuCode %>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="skuDesc">SKU Desc</label>
+                        <input type="text" class="form-control" id="skuDesc" name="skuDesc" value="<%= order.skuDesc %>">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="palletQty">Pallet Qty</label>
+                        <input type="number" class="form-control" id="palletQty" name="palletQty" value="<%= order.palletQty %>">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="threeDigitCode">3 Digit Code</label>
+                        <input type="text" class="form-control" id="threeDigitCode" name="threeDigitCode">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-danger">Delete</button>
+            </form>
+            <div class="mt-3">
+                <button class="btn btn-secondary" onclick="navigateOrder('<%= order._id %>', 'previous')">Previous</button>
+                <button class="btn btn-secondary" onclick="navigateOrder('<%= order._id %>', 'next')">Next</button>
+            </div>
+        <% } else { %>
+            <p>No order data available.</p>
+        <% } %>
+    </div>
+    <%- include('partials/footer') %>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function navigateOrder(currentOrderId, direction) {
+            window.location.href = '/forkliftOperator?currentOrderId=' + currentOrderId + '&direction=' + direction;
+        }
+    </script>
+</body>
+</html>

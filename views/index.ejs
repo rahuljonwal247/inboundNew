@@ -1,0 +1,98 @@
+
+ <!DOCTYPE html>
+<html>
+<head>
+  <title>Inbound Receipt</title>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <link href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <style>
+    .button1{
+      margin-top: 24px;
+    }
+  </style>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <div class="container">
+    <h1 class="center-text ">Inbound Receipt</h1>
+    <div class="container mt-5">
+      <form action="/process-order" method="POST">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="productionLine">Production Line</label>
+            <select class="form-control" id="productionLine" name="productionLine">
+              <% lines.forEach(line => { %>
+                <option value="<%= line.productionLine %>"><%= line.productionLine %></option>
+              <% }) %>
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="processOrder">Process Order #</label>
+            <input type="number" class="form-control" id="processOrder" name="processOrder" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" id="date" name="date" required>
+          </div>
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="skuCode">SKU Code</label>
+            <input type="text" class="form-control" id="skuCode" name="skuCode" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="skuDesc">SKU Description</label>
+            <input type="text" class="form-control" id="skuDesc" name="skuDesc" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="sut">SUT</label>
+            <input type="text" class="form-control" id="sut" name="sut" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="batch">Batch #</label>
+            <input type="text" class="form-control" id="batch" name="batch" required>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="processOrderQty">Process Order Qty</label>
+            <input type="number" class="form-control" id="processOrderQty" name="processOrderQty" required>
+          </div>
+        </div>
+        
+        <button type="submit" class="btn btn-primary button1">Submit</button>
+      
+      </form>
+    </div>
+  </div>
+  <%- include('partials/footer') %>
+
+  <script>
+    $(function() {
+      $('#skuCode').autocomplete({
+        source: function(request, response) {
+          $.ajax({
+            url: '/search-sku',
+            data: { term: request.term },
+            success: function(data) {
+              response(data);
+            }
+          });
+        },
+        minLength: 2,
+        select: function(event, ui) {
+          $('#skuCode').val(ui.item.value);
+          $('#skuDesc').val(ui.item.description);
+          $('#sut').val(ui.item.sut); // Automatically fill SKU description
+          return false;
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
+
